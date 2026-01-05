@@ -17,7 +17,7 @@ type StorageType = 'local' | 'session'
 /**
  * 获取存储对象
  */
-function getStorage(type: StorageType): Storage {
+function getStorageInstance(type: StorageType): Storage {
   return type === 'local' ? localStorage : sessionStorage
 }
 
@@ -38,7 +38,7 @@ export function setStorage<T>(
   expire?: number,
   type: StorageType = 'local'
 ): void {
-  const storage = getStorage(type)
+  const storage = getStorageInstance(type)
 
   const item: StorageItem<T> = {
     value,
@@ -63,7 +63,7 @@ export function setStorage<T>(
  * const userInfo = getStorage<UserInfo>('userInfo')
  */
 export function getStorage<T>(key: string, type: StorageType = 'local'): T | null {
-  const storage = getStorage(type)
+  const storage = getStorageInstance(type)
 
   try {
     const itemStr = storage.getItem(key)
@@ -91,7 +91,7 @@ export function getStorage<T>(key: string, type: StorageType = 'local'): T | nul
  * @param type 存储类型，默认 localStorage
  */
 export function removeStorage(key: string, type: StorageType = 'local'): void {
-  const storage = getStorage(type)
+  const storage = getStorageInstance(type)
   storage.removeItem(key)
 }
 
@@ -100,7 +100,7 @@ export function removeStorage(key: string, type: StorageType = 'local'): void {
  * @param type 存储类型，默认 localStorage
  */
 export function clearStorage(type: StorageType = 'local'): void {
-  const storage = getStorage(type)
+  const storage = getStorageInstance(type)
   storage.clear()
 }
 
