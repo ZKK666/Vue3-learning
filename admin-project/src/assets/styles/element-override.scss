@@ -1,0 +1,56 @@
+/**
+ * Element Plus 样式覆盖
+ * 用于自定义 Element Plus 组件样式
+ */
+
+/* ==================== 全局样式覆盖 ==================== */
+
+/* 表格样式优化 */
+.el-table {
+  /* 表头样式 */
+  .el-table__header-wrapper {
+    th {
+      background-color: #f5f7fa;
+      color: #606266;
+      font-weight: 600;
+    }
+  }
+
+  /* 行悬停效果 */
+  .el-table__body tr:hover > td {
+    background-color: #f5f7fa !important;
+  }
+}
+
+/* 对话框样式 */
+.el-dialog {
+  border-radius: 8px;
+
+  .el-dialog__header {
+    border-bottom: 1px solid #e4e7ed;
+    padding: 20px;
+  }
+
+  .el-dialog__body {
+    padding: 20px;
+  }
+}
+
+/* 分页样式 */
+.el-pagination {
+  margin-top: 20px;
+  text-align: right;
+}
+
+/* 表单样式 */
+.el-form {
+  .el-form-item__label {
+    font-weight: 500;
+  }
+}
+
+/* 卡片样式 */
+.el-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
