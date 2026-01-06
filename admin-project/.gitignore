@@ -16,6 +16,11 @@ dist-ssr
 src/types/auto-imports.d.ts
 src/types/components.d.ts
 
+# Environment variables
+.env
+.env.*
+!.env.example
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
