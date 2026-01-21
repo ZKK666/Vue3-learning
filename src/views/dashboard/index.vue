@@ -2,14 +2,20 @@
   <div class="dashboard">
     <h1 class="page-title">Dashboard</h1>
 
+    <!-- 加载状态 -->
+    <div v-if="loading" v-loading="loading" class="loading-container"></div>
+
     <!-- 核心指标卡片 -->
-    <el-row :gutter="20" class="metrics-row">
+    <el-row v-else :gutter="20" class="metrics-row">
       <el-col :xs="24" :sm="12" :lg="6">
         <el-card class="metric-card">
           <div class="metric-content">
             <div class="metric-info">
               <p class="metric-label">总销售额</p>
-              <h3 class="metric-value">¥128,560</h3>
+              <h3 class="metric-value">¥{{ formatNumber(metricsData?.totalSales) }}</h3>
+              <p class="metric-trend">
+                今日: ¥{{ formatNumber(metricsData?.todaySales) }}
+              </p>
             </div>
             <el-icon class="metric-icon" color="#409eff">
               <Money />
@@ -23,7 +29,10 @@
           <div class="metric-content">
             <div class="metric-info">
               <p class="metric-label">总订单数</p>
-              <h3 class="metric-value">1,234</h3>
+              <h3 class="metric-value">{{ formatNumber(metricsData?.totalOrders) }}</h3>
+              <p class="metric-trend">
+                今日: {{ formatNumber(metricsData?.todayOrders) }}
+              </p>
             </div>
             <el-icon class="metric-icon" color="#67c23a">
               <ShoppingCart />
@@ -37,7 +46,10 @@
           <div class="metric-content">
             <div class="metric-info">
               <p class="metric-label">总用户数</p>
-              <h3 class="metric-value">856</h3>
+              <h3 class="metric-value">{{ formatNumber(metricsData?.totalUsers) }}</h3>
+              <p class="metric-trend">
+                今日新增: {{ formatNumber(metricsData?.todayUsers) }}
+              </p>
             </div>
             <el-icon class="metric-icon" color="#e6a23c">
               <User />
@@ -51,7 +63,7 @@
           <div class="metric-content">
             <div class="metric-info">
               <p class="metric-label">总商品数</p>
-              <h3 class="metric-value">342</h3>
+              <h3 class="metric-value">{{ formatNumber(metricsData?.totalProducts) }}</h3>
             </div>
             <el-icon class="metric-icon" color="#f56c6c">
               <Goods />
@@ -99,6 +111,7 @@
           <li>✅ Axios 请求封装</li>
           <li>✅ TypeScript 类型系统</li>
           <li>✅ Element Plus UI 组件库</li>
+          <li>✅ Composables 逻辑复用（useRequest, useTable, useForm, usePagination）</li>
           <li>🚧 商品管理模块（待开发）</li>
           <li>🚧 订单管理模块（待开发）</li>
           <li>🚧 用户管理模块（待开发）</li>
@@ -112,8 +125,56 @@
 /**
  * Dashboard 首页
  * 展示核心指标和系统概览
+ *
+ * 与 React 的区别：
+ * - React: 使用 useEffect + useState 管理数据和加载状态
+ * - Vue3: 使用 Composable（useRequest）封装请求逻辑，代码更简洁
  */
+import { onMounted, computed } from 'vue'
 import { Money, ShoppingCart, User, Goods } from '@element-plus/icons-vue'
+import { getCoreMetrics, type CoreMetrics } from '@/api/modules/dashboard'
+import { useRequest } from '@/composables/useRequest'
+
+/**
+ * 使用 useRequest 封装 API 请求
+ *
+ * 与 React 的区别：
+ * - React: 需要手动管理 loading, data, error 状态
+ * - Vue3: useRequest 自动管理这些状态，开箱即用
+ */
+const { data: metricsData, loading, execute: loadMetrics } = useRequest<CoreMetrics, []>(
+  getCoreMetrics,
+  {
+    immediate: false, // 不立即执行，等组件挂载后再执行
+    showErrorMessage: true // 显示错误提示
+  }
+)
+
+/**
+ * 格式化数字（添加千分位分隔符）
+ *
+ * @param value - 数值
+ * @returns 格式化后的字符串
+ */
+const formatNumber = (value: number | undefined): string => {
+  if (value === undefined || value === null) {
+    return '0'
+  }
+  return value.toLocaleString('zh-CN')
+}
+
+/**
+ * 组件挂载时加载数据
+ *
+ * 与 React 的区别：
+ * - React: useEffect(() => { loadData() }, [])
+ * - Vue3: onMounted(() => { loadData() })
+ *
+ * 两者概念相似，但 Vue3 的生命周期钩子更明确
+ */
+onMounted(() => {
+  loadMetrics()
+})
 </script>
 
 <style scoped lang="scss">
@@ -123,6 +184,10 @@ import { Money, ShoppingCart, User, Goods } from '@element-plus/icons-vue'
     font-size: 24px;
     font-weight: 600;
     color: #303133;
+  }
+
+  .loading-container {
+    min-height: 200px;
   }
 
   .metrics-row {
@@ -136,6 +201,8 @@ import { Money, ShoppingCart, User, Goods } from '@element-plus/icons-vue'
       justify-content: space-between;
 
       .metric-info {
+        flex: 1;
+
         .metric-label {
           margin: 0 0 8px;
           font-size: 14px;
@@ -143,10 +210,16 @@ import { Money, ShoppingCart, User, Goods } from '@element-plus/icons-vue'
         }
 
         .metric-value {
-          margin: 0;
+          margin: 0 0 8px;
           font-size: 28px;
           font-weight: 600;
           color: #303133;
+        }
+
+        .metric-trend {
+          margin: 0;
+          font-size: 12px;
+          color: #67c23a;
         }
       }
 
