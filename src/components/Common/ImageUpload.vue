@@ -235,10 +235,10 @@ const handleError = () => {
 /**
  * 删除文件回调
  *
- * @param file - 删除的文件
+ * @param _file - 删除的文件
  * @param files - 剩余文件列表
  */
-const handleRemove = (file: UploadFile, files: UploadFiles) => {
+const handleRemove = (_file: UploadFile, files: UploadFiles) => {
   // 更新 modelValue
   const urls = files.map((f) => f.url || '').filter(Boolean)
 

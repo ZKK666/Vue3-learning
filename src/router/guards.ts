@@ -27,7 +27,7 @@ export function setupRouterGuards(router: Router) {
    * 全局前置守卫
    * 在每次路由跳转前执行
    */
-  router.beforeEach(async (to, from, next) => {
+  router.beforeEach(async (to, _from, next) => {
     // 设置页面标题
     document.title = (to.meta.title as string) || 'Vue3 电商管理后台'
 
@@ -93,7 +93,7 @@ export function setupRouterGuards(router: Router) {
    * 全局后置钩子
    * 在路由跳转完成后执行
    */
-  router.afterEach((to, from) => {
+  router.afterEach((_to, _from) => {
     // 可以在这里添加一些后置处理
     // 例如：页面访问统计、埋点等
   })

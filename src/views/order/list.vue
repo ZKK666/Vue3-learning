@@ -26,7 +26,7 @@
         </el-table-column>
         <el-table-column label="支付方式" width="120">
           <template #default="{ row }">
-            {{ PaymentMethodMap[row.paymentMethod] }}
+            {{ PaymentMethodMap[row.paymentMethod as PaymentMethod] }}
           </template>
         </el-table-column>
         <el-table-column label="状态" width="100">
@@ -64,7 +64,7 @@ import StatusTag from '@/components/Business/StatusTag.vue'
 import { useTable } from '@/composables/useTable'
 import { getOrderList } from '@/api/modules/order'
 import type { Order } from '@/types/models/order'
-import { OrderStatus, PaymentMethodMap } from '@/types/models/order'
+import { OrderStatus, PaymentMethod, PaymentMethodMap } from '@/types/models/order'
 
 const router = useRouter()
 

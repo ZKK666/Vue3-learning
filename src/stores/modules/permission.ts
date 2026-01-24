@@ -32,7 +32,7 @@ export const usePermissionStore = defineStore('permission', () => {
    * 2. 防止用户通过 URL 直接访问无权限的页面
    * 3. 实现菜单的动态显示隐藏
    */
-  async function generateRoutes(roles: string[]): Promise<RouteRecordRaw[]> {
+  async function generateRoutes(_roles: string[]): Promise<RouteRecordRaw[]> {
     // 这里可以根据角色从后端获取路由配置
     // 或者从本地路由配置中过滤
     // 暂时返回所有路由（后续完善）

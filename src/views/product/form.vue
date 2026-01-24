@@ -140,7 +140,7 @@
  * - React: 使用 react-hook-form 的 register, handleSubmit
  * - Vue3: 使用 v-model + useForm，更直观
  */
-import { ref, onMounted, computed } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import type { FormRules } from 'element-plus'
@@ -217,7 +217,7 @@ const rules: FormRules = {
  * - Vue3: useForm 封装了验证、提交、加载状态等
  */
 const {
-  formRef,
+  formRef, // 在模板中使用，TS 编译器可能检测不到
   formData,
   loading,
   handleSubmit: submitForm

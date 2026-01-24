@@ -130,7 +130,7 @@
  * - React: 使用 useEffect + useState 管理数据和加载状态
  * - Vue3: 使用 Composable（useRequest）封装请求逻辑，代码更简洁
  */
-import { onMounted, computed } from 'vue'
+import { onMounted } from 'vue'
 import { Money, ShoppingCart, User, Goods } from '@element-plus/icons-vue'
 import { getCoreMetrics, type CoreMetrics } from '@/api/modules/dashboard'
 import { useRequest } from '@/composables/useRequest'

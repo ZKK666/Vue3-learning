@@ -232,11 +232,13 @@ function matchMockHandler(method: string, url: string) {
     }
 
     // 将路径参数模式转换为正则表达式
-    const pattern = mockPath.replace(/:\w+/g, '[^/]+')
-    const regex = new RegExp(`^${pattern}$`)
+    if (mockPath) {
+      const pattern = mockPath.replace(/:\w+/g, '[^/]+')
+      const regex = new RegExp(`^${pattern}$`)
 
-    if (regex.test(url)) {
-      return mockHandlers[key]
+      if (regex.test(url)) {
+        return mockHandlers[key]
+      }
     }
   }
 
@@ -250,10 +252,12 @@ function matchMockHandler(method: string, url: string) {
  */
 export function setupMock() {
   // 动态导入 axios（避免循环依赖）
-  import('@/api/request').then(({ default: request }) => {
+  import('axios').then((axiosModule) => {
+    const axios = axiosModule.default
+
     // 添加请求拦截器（在原有拦截器之前）
-    request.interceptors.request.use(
-      async (config) => {
+    axios.interceptors.request.use(
+      async (config: any) => {
         const { method = 'GET', url = '' } = config
 
         // 移除 baseURL
@@ -282,7 +286,7 @@ export function setupMock() {
 
         return config
       },
-      (error) => Promise.reject(error)
+      (error: any) => Promise.reject(error)
     )
 
     console.log('[Mock] Mock 服务已启用')

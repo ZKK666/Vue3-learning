@@ -69,7 +69,9 @@ export function formatMoney(
 
   // 添加千分位分隔符
   const parts = fixed.split('.')
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  if (parts[0]) {
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
 
   return symbol + parts.join('.')
 }
@@ -128,7 +130,9 @@ export function formatNumber(num: number | string, decimals?: number): string {
 
   // 添加千分位分隔符
   const parts = formatted.split('.')
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  if (parts[0]) {
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
 
   return parts.join('.')
 }

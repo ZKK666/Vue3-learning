@@ -150,7 +150,7 @@ export function useForm<T extends Record<string, any>>(
       loading.value = true
 
       // 调用提交函数
-      await submitFunction(formData)
+      await submitFunction(formData as T)
 
       // 显示成功提示
       if (showSuccessMessage) {
@@ -158,7 +158,7 @@ export function useForm<T extends Record<string, any>>(
       }
 
       // 成功回调
-      onSuccess?.(formData)
+      onSuccess?.(formData as T)
 
       // 提交成功后重置表单
       if (resetAfterSubmit) {
@@ -204,7 +204,7 @@ export function useForm<T extends Record<string, any>>(
 
   return {
     formRef,
-    formData,
+    formData: formData as T,
     loading,
     handleSubmit,
     resetForm,
