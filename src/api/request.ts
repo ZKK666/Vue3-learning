@@ -3,7 +3,8 @@
  * 提供统一的 HTTP 请求接口，包含请求/响应拦截器
  */
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
+import axios from 'axios'
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import { ElMessage } from 'element-plus'
 import type { ApiResponse } from '@/types/global'
 import { tokenStorage } from '@/utils/storage'
