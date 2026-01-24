@@ -13,6 +13,13 @@ import '@/assets/styles/element-override.scss'
 // 导入 Element Plus 图标
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
+// 启用 Mock 服务（仅开发环境）
+if (import.meta.env.DEV) {
+  import('./mock').then(({ setupMock }) => {
+    setupMock()
+  })
+}
+
 // 创建应用实例
 const app = createApp(App)
 

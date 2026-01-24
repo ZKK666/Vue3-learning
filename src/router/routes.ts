@@ -69,27 +69,112 @@ export const asyncRoutes: RouteRecordRaw[] = [
       }
     ]
   },
-  // 商品管理（暂时注释，后续添加）
-  // {
-  //   path: '/product',
-  //   component: () => import('@/components/Layout/index.vue'),
-  //   redirect: '/product/list',
-  //   meta: {
-  //     title: '商品管理',
-  //     icon: 'Goods'
-  //   },
-  //   children: [
-  //     {
-  //       path: '/product/list',
-  //       name: 'ProductList',
-  //       component: () => import('@/views/product/list.vue'),
-  //       meta: {
-  //         title: '商品列表',
-  //         requiresAuth: true
-  //       }
-  //     }
-  //   ]
-  // },
+  // 商品管理
+  {
+    path: '/product',
+    component: () => import('@/components/Layout/index.vue'),
+    redirect: '/product/list',
+    meta: {
+      title: '商品管理',
+      icon: 'Goods',
+      requiresAuth: true
+    },
+    children: [
+      {
+        path: '/product/list',
+        name: 'ProductList',
+        component: () => import('@/views/product/list.vue'),
+        meta: {
+          title: '商品列表',
+          requiresAuth: true
+        }
+      },
+      {
+        path: '/product/form',
+        name: 'ProductForm',
+        component: () => import('@/views/product/form.vue'),
+        meta: {
+          title: '商品表单',
+          requiresAuth: true,
+          hidden: true // 不在菜单显示
+        }
+      },
+      {
+        path: '/product/detail/:id',
+        name: 'ProductDetail',
+        component: () => import('@/views/product/detail.vue'),
+        meta: {
+          title: '商品详情',
+          requiresAuth: true,
+          hidden: true // 不在菜单显示
+        }
+      }
+    ]
+  },
+  // 订单管理
+  {
+    path: '/order',
+    component: () => import('@/components/Layout/index.vue'),
+    redirect: '/order/list',
+    meta: {
+      title: '订单管理',
+      icon: 'ShoppingCart',
+      requiresAuth: true
+    },
+    children: [
+      {
+        path: '/order/list',
+        name: 'OrderList',
+        component: () => import('@/views/order/list.vue'),
+        meta: {
+          title: '订单列表',
+          requiresAuth: true
+        }
+      },
+      {
+        path: '/order/detail/:id',
+        name: 'OrderDetail',
+        component: () => import('@/views/order/detail.vue'),
+        meta: {
+          title: '订单详情',
+          requiresAuth: true,
+          hidden: true // 不在菜单显示
+        }
+      }
+    ]
+  },
+  // 用户管理
+  {
+    path: '/user',
+    component: () => import('@/components/Layout/index.vue'),
+    redirect: '/user/list',
+    meta: {
+      title: '用户管理',
+      icon: 'User',
+      requiresAuth: true
+    },
+    children: [
+      {
+        path: '/user/list',
+        name: 'UserList',
+        component: () => import('@/views/user/list.vue'),
+        meta: {
+          title: '用户列表',
+          requiresAuth: true
+        }
+      },
+      {
+        path: '/user/detail/:id',
+        name: 'UserDetail',
+        component: () => import('@/views/user/detail.vue'),
+        meta: {
+          title: '用户详情',
+          requiresAuth: true,
+          hidden: true // 不在菜单显示
+        }
+      }
+    ]
+  },
 
   // 404 页面必须放在最后
   {
